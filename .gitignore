@@ -37,6 +37,10 @@ sprint3_*/*.doc
 *_enhanced_intelligence_*.json
 *_intelligence_*.json
 
+# Image and diagram files
+*.png
+*.mmd
+
 # Test files and directories
 tests/
 test_*
