@@ -24,7 +24,7 @@ class EnhancedDiagramGenerator:
         self.charts_dir = charts_dir
         self.charts_dir.mkdir(exist_ok=True)
         
-        # Professional color palette
+        # Professional color palette with gradients
         self.colors = {
             'primary': '#007bd3',
             'secondary': '#48b0f1', 
@@ -37,11 +37,237 @@ class EnhancedDiagramGenerator:
             'dark': '#2c3e50'
         }
         
+        # Professional gradient colors
+        self.professional_colors = {
+            'gradient_primary': ['#007bd3', '#005a9e'],
+            'gradient_secondary': ['#48b0f1', '#2e86ab'],
+            'gradient_accent': ['#16a085', '#0e6251'],
+            'gradient_warning': ['#f39c12', '#d68910'],
+            'gradient_danger': ['#e74c3c', '#c0392b'],
+            'gradient_success': ['#27ae60', '#1e8449'],
+            'shadows': '#2c3e50',
+            'highlights': '#ffffff',
+            'text_primary': '#2c3e50',
+            'text_secondary': '#7f8c8d',
+            'background': '#f8f9fa',
+            'grid': '#e0e0e0'
+        }
+        
+        # Professional typography
+        self.fonts = {
+            'title': {'family': 'Arial', 'size': 18, 'weight': 'bold'},
+            'subtitle': {'family': 'Arial', 'size': 14, 'weight': 'bold'},
+            'label': {'family': 'Arial', 'size': 11, 'weight': 'normal'},
+            'annotation': {'family': 'Arial', 'size': 9, 'weight': 'italic'}
+        }
+        
         # Set professional style
-        plt.style.use('seaborn-v0_8-whitegrid')
+        self._setup_professional_style()
         sns.set_palette([self.colors['primary'], self.colors['secondary'], 
                         self.colors['accent'], self.colors['warning'], 
                         self.colors['danger'], self.colors['success']])
+    
+    def _setup_professional_style(self):
+        """Configure matplotlib for professional output"""
+        import matplotlib as mpl
+        
+        # Set default figure parameters
+        mpl.rcParams['figure.dpi'] = 300
+        mpl.rcParams['savefig.dpi'] = 300
+        mpl.rcParams['font.size'] = 10
+        mpl.rcParams['axes.labelsize'] = 12
+        mpl.rcParams['axes.titlesize'] = 14
+        mpl.rcParams['xtick.labelsize'] = 10
+        mpl.rcParams['ytick.labelsize'] = 10
+        mpl.rcParams['legend.fontsize'] = 10
+        mpl.rcParams['figure.titlesize'] = 16
+        
+        # Grid styling
+        mpl.rcParams['axes.grid'] = True
+        mpl.rcParams['grid.alpha'] = 0.3
+        mpl.rcParams['grid.linestyle'] = '-'
+        mpl.rcParams['grid.linewidth'] = 0.5
+        
+        # Spine styling
+        mpl.rcParams['axes.spines.top'] = False
+        mpl.rcParams['axes.spines.right'] = False
+        
+        # Color cycle
+        mpl.rcParams['axes.prop_cycle'] = mpl.cycler(
+            color=[self.colors['primary'], self.colors['secondary'], 
+                   self.colors['accent'], self.colors['warning'], 
+                   self.colors['danger'], self.colors['success']]
+        )
+    
+    def _add_gradient_fill(self, ax, x, y, color_start, color_end):
+        """Add gradient fill to areas"""
+        import matplotlib.colors as mcolors
+        
+        # Create gradient
+        gradient = mcolors.LinearSegmentedColormap.from_list(
+            'gradient', [color_start, color_end]
+        )
+        
+        # Apply gradient fill
+        z = np.linspace(0, 1, 100)
+        im = ax.imshow([z], aspect='auto', cmap=gradient, 
+                       extent=[x.min(), x.max(), y.min(), y.max()],
+                       alpha=0.7)
+        return im
+    
+    def _add_shadow(self, element, ax, offset_x=0.05, offset_y=-0.05):
+        """Add drop shadow to elements"""
+        from matplotlib.patches import Shadow
+        shadow = Shadow(element, offset_x, offset_y)
+        shadow.set_facecolor(self.professional_colors['shadows'])
+        shadow.set_alpha(0.3)
+        ax.add_patch(shadow)
+        return shadow
+    
+    def _draw_3d_component(self, ax, name, x, y, color, tier='service'):
+        """Draw enhanced 3D-style component boxes with professional styling"""
+        from matplotlib.patches import FancyBboxPatch, Polygon
+        
+        # Enhanced 3D effect with multiple shadow layers
+        shadow_depths = [0.08, 0.06, 0.04]
+        shadow_alphas = [0.3, 0.2, 0.1]
+        
+        for depth, alpha in zip(shadow_depths, shadow_alphas):
+            shadow_points = [
+                (x-0.4, y-0.3),
+                (x-0.4+depth, y-0.3-depth),
+                (x+0.4+depth, y-0.3-depth),
+                (x+0.4+depth, y+0.3-depth),
+                (x+0.4, y+0.3),
+                (x-0.4, y+0.3)
+            ]
+            shadow = Polygon(shadow_points, facecolor='black', alpha=alpha, zorder=1)
+            ax.add_patch(shadow)
+        
+        # Main box with enhanced styling
+        box = FancyBboxPatch((x-0.4, y-0.3), 0.8, 0.6,
+                             boxstyle="round,pad=0.05",
+                             facecolor=color, edgecolor='white',
+                             alpha=0.95, linewidth=3, zorder=3)
+        ax.add_patch(box)
+        
+        # Add inner border for professional look
+        inner_box = FancyBboxPatch((x-0.38, y-0.28), 0.76, 0.56,
+                                   boxstyle="round,pad=0.04",
+                                   facecolor='none', edgecolor='white',
+                                   alpha=0.4, linewidth=1, zorder=4)
+        ax.add_patch(inner_box)
+        
+        # Add gradient overlay with tier-based styling
+        if tier == 'presentation':
+            gradient_color = self.professional_colors['gradient_primary'][0]
+        elif tier == 'business':
+            gradient_color = self.professional_colors['gradient_secondary'][0]
+        else:
+            gradient_color = self.professional_colors['gradient_accent'][0]
+            
+        gradient_box = FancyBboxPatch((x-0.4, y-0.1), 0.8, 0.2,
+                                      boxstyle="round,pad=0.05",
+                                      facecolor=gradient_color, alpha=0.3, zorder=5)
+        ax.add_patch(gradient_box)
+        
+        # Add component name with text shadow
+        ax.text(x+0.002, y-0.002, name, ha='center', va='center',
+                fontsize=self.fonts['label']['size'],
+                fontweight='bold', color='black', alpha=0.3, zorder=6)
+        
+        ax.text(x, y, name, ha='center', va='center',
+                fontsize=self.fonts['label']['size'],
+                fontweight='bold', color='white', zorder=7)
+        
+        # Add tier indicator
+        if tier != 'service':
+            tier_text = tier.upper()
+            ax.text(x+0.3, y+0.25, tier_text, ha='center', va='center',
+                    fontsize=8, fontweight='bold', color=color,
+                    bbox=dict(boxstyle="round,pad=0.02", facecolor='white', alpha=0.8))
+        
+        return box
+    
+    def _add_watermark(self, fig, text="CONFIDENTIAL"):
+        """Add professional watermark to figure"""
+        fig.text(0.5, 0.5, text, fontsize=50, color='gray',
+                 alpha=0.1, ha='center', va='center', rotation=45,
+                 transform=fig.transFigure)
+    
+    def _get_component_tier(self, component: Dict[str, Any]) -> str:
+        """Determine component tier based on its characteristics"""
+        files = component.get('files', [])
+        language = component.get('language', '').lower()
+        
+        # Check for web/UI components
+        if any(f.endswith(('.html', '.jsx', '.tsx', '.vue', '.angular.js')) for f in files):
+            return 'presentation'
+        
+        # Check for database components
+        if any(f.endswith(('.sql', '.db', '.sqlite')) for f in files) or 'database' in language:
+            return 'data'
+        
+        # Check for business logic
+        if any(f.endswith(('.service.js', '.service.ts', '.business.py')) for f in files):
+            return 'business'
+        
+        return 'service'
+    
+    def _calculate_connection_strength(self, comp1: Dict[str, Any], comp2: Dict[str, Any]) -> float:
+        """Calculate connection strength between two components"""
+        score = 0.0
+        
+        # Same language increases connection strength
+        if comp1.get('language') == comp2.get('language'):
+            score += 0.3
+        
+        # Similar file patterns
+        files1 = set(comp1.get('files', []))
+        files2 = set(comp2.get('files', []))
+        common_patterns = len(files1 & files2)
+        if common_patterns > 0:
+            score += min(common_patterns * 0.1, 0.4)
+        
+        # Infrastructure dependencies
+        if comp1.get('dockerfile_found') and comp2.get('dockerfile_found'):
+            score += 0.2
+        
+        return min(score, 1.0)
+    
+    def _add_professional_annotations(self, ax, data):
+        """Add data insights and annotations"""
+        # Add key metrics box
+        textstr = f'Key Metrics:\n'
+        textstr += f'• Total Components: {data.get("total_components", 0)}\n'
+        textstr += f'• Critical Issues: {data.get("critical_issues", 0)}\n'
+        textstr += f'• Last Updated: {datetime.now().strftime("%Y-%m-%d")}'
+        
+        props = dict(boxstyle='round,pad=0.5', facecolor='lightblue', 
+                     alpha=0.8, edgecolor='navy', linewidth=2)
+        ax.text(0.95, 0.95, textstr, transform=ax.transAxes, 
+                fontsize=10, verticalalignment='top',
+                horizontalalignment='right', bbox=props)
+    
+    def _save_professional_diagram(self, fig, output_path):
+        """Save diagram with professional settings"""
+        fig.savefig(
+            output_path,
+            dpi=300,
+            bbox_inches='tight',
+            pad_inches=0.2,
+            facecolor='white',
+            edgecolor='none',
+            format='png',
+            transparent=False,
+            metadata={
+                'Title': 'Professional System Diagram',
+                'Author': 'Application Intelligence Platform',
+                'Description': 'Auto-generated technical diagram',
+                'Software': 'matplotlib'
+            }
+        )
+        plt.close(fig)
     
     def generate_all_diagrams(self, intelligence_data: Dict[str, Any]) -> List[str]:
         """Generate all applicable diagrams based on intelligence data"""
@@ -397,7 +623,7 @@ class EnhancedDiagramGenerator:
             return None
     
     def create_component_network_diagram(self, intelligence_data: Dict[str, Any]) -> Optional[str]:
-        """Create component network diagram using NetworkX"""
+        """Create enhanced component network diagram with 3D styling"""
         try:
             components = intelligence_data.get('components', {})
             if len(components) < 2:
@@ -418,36 +644,59 @@ class EnhancedDiagramGenerator:
                     if components[comp1].get('type') != components[comp2].get('type'):
                         G.add_edge(comp1, comp2)
             
-            # Create layout
-            fig, ax = plt.subplots(figsize=(12, 10))
-            pos = nx.spring_layout(G, k=3, iterations=50)
+            # Create layout with better algorithm
+            fig, ax = plt.subplots(figsize=(14, 10))
+            ax.set_facecolor(self.professional_colors['background'])
             
-            # Draw nodes
-            node_colors = []
-            for node in G.nodes():
+            # Use kamada_kawai_layout for better positioning
+            pos = nx.kamada_kawai_layout(G, scale=2)
+            
+            # Draw enhanced edges with curves
+            from matplotlib.patches import FancyArrowPatch
+            
+            for edge in G.edges():
+                x1, y1 = pos[edge[0]]
+                x2, y2 = pos[edge[1]]
+                
+                # Add curved arrows
+                arrow = FancyArrowPatch((x1, y1), (x2, y2),
+                                        connectionstyle="arc3,rad=0.1",
+                                        arrowstyle='-',
+                                        mutation_scale=20,
+                                        linewidth=2,
+                                        color=self.professional_colors['text_secondary'],
+                                        alpha=0.6)
+                ax.add_patch(arrow)
+            
+            # Draw enhanced nodes with 3D effects
+            for node, (x, y) in pos.items():
                 comp_type = components[node].get('type', 'unknown')
+                
                 if 'web' in comp_type:
-                    node_colors.append(self.colors['primary'])
+                    color = self.colors['primary']
                 elif 'data' in comp_type or 'redis' in node or 'postgres' in node:
-                    node_colors.append(self.colors['accent'])
+                    color = self.colors['accent']
                 else:
-                    node_colors.append(self.colors['secondary'])
+                    color = self.colors['secondary']
+                
+                # Draw 3D component
+                self._draw_3d_component(ax, node, x, y, color)
             
-            nx.draw_networkx_nodes(G, pos, node_color=node_colors, 
-                                 node_size=2000, ax=ax)
-            nx.draw_networkx_edges(G, pos, edge_color='gray', 
-                                 width=2, alpha=0.6, ax=ax)
-            nx.draw_networkx_labels(G, pos, font_size=10, 
-                                  font_weight='bold', ax=ax)
+            ax.set_title('Component Network Topology', 
+                        fontsize=self.fonts['title']['size'], 
+                        fontweight=self.fonts['title']['weight'], 
+                        pad=20, color=self.professional_colors['text_primary'])
             
-            ax.set_title('Component Network Diagram', 
-                        fontsize=16, fontweight='bold', pad=20)
+            # Add professional annotations
+            self._add_professional_annotations(ax, intelligence_data.get('summary', {}))
+            
             ax.axis('off')
+            ax.set_xlim(-2.5, 2.5)
+            ax.set_ylim(-2.5, 2.5)
             
             plt.tight_layout()
             chart_path = self.charts_dir / "component_network.png"
-            plt.savefig(chart_path, dpi=300, bbox_inches='tight')
-            plt.close()
+            self._save_professional_diagram(fig, chart_path)
             
             return str(chart_path)
             

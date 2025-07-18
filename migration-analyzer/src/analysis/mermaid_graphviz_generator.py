@@ -40,10 +40,233 @@ class MermaidGraphvizGenerator:
             'dark': '#2c3e50'
         }
         
+        # Professional gradient colors
+        self.professional_colors = {
+            'gradient_primary': ['#007bd3', '#005a9e'],
+            'gradient_secondary': ['#48b0f1', '#2e86ab'],
+            'gradient_accent': ['#16a085', '#0e6251'],
+            'gradient_warning': ['#f39c12', '#d68910'],
+            'gradient_danger': ['#e74c3c', '#c0392b'],
+            'gradient_success': ['#27ae60', '#1e8449'],
+            'shadows': '#2c3e50',
+            'highlights': '#ffffff',
+            'text_primary': '#2c3e50',
+            'text_secondary': '#7f8c8d',
+            'background': '#f8f9fa',
+            'grid': '#e0e0e0'
+        }
+        
         print(f"MERMAID-GRAPHVIZ [MERMAID-GRAPHVIZ] Initialized diagram generator")
         print(f"   - Mermaid CLI: {'YES' if self.mermaid_available else 'NO'}")
         print(f"   - Graphviz: {'YES' if self.graphviz_available else 'NO'}")
         print(f"   - Puppeteer: {'YES' if self.puppeteer_available else 'NO'}")
+    
+    def _get_professional_mermaid_theme(self):
+        """Generate professional Mermaid theme with enhanced styling"""
+        return """
+%%{init: {
+    'theme': 'base',
+    'themeVariables': {
+        'primaryColor': '#007bd3',
+        'primaryTextColor': '#ffffff',
+        'primaryBorderColor': '#005a9e',
+        'lineColor': '#5c5c5c',
+        'secondaryColor': '#48b0f1',
+        'tertiaryColor': '#16a085',
+        'background': '#f8f9fa',
+        'mainBkg': '#ffffff',
+        'secondBkg': '#f0f0f0',
+        'tertiaryBkg': '#e0e0e0',
+        'primaryBorderColor': '#cccccc',
+        'secondaryBorderColor': '#bbbbbb',
+        'tertiaryBorderColor': '#aaaaaa',
+        'fontFamily': 'Arial, sans-serif',
+        'fontSize': '16px',
+        'labelBackground': '#ffffff',
+        'textColor': '#2c3e50',
+        'nodeBkg': '#ffffff',
+        'nodeTextColor': '#2c3e50',
+        'edgeLabelBackground': '#ffffff',
+        'clusterBkg': '#f5f5f5',
+        'clusterBorder': '#cccccc',
+        'defaultLinkColor': '#666666',
+        'actorBkg': '#ffffff',
+        'actorBorder': '#007bd3',
+        'actorTextColor': '#2c3e50',
+        'actorLineColor': '#005a9e',
+        'signalColor': '#666666',
+        'signalTextColor': '#2c3e50',
+        'c0': '#007bd3',
+        'c1': '#48b0f1',
+        'c2': '#16a085',
+        'c3': '#f39c12',
+        'c4': '#e74c3c',
+        'c5': '#27ae60',
+        'c6': '#8e44ad',
+        'c7': '#34495e',
+        'pie1': '#007bd3',
+        'pie2': '#48b0f1',
+        'pie3': '#16a085',
+        'pie4': '#f39c12',
+        'pie5': '#e74c3c',
+        'pie6': '#27ae60',
+        'pie7': '#8e44ad',
+        'pie8': '#34495e',
+        'pie9': '#2c3e50',
+        'pie10': '#7f8c8d',
+        'pie11': '#95a5a6',
+        'pie12': '#bdc3c7'
+    }
+}}%%
+"""
+    
+    def _get_professional_dot_template(self):
+        """Get professional Graphviz template with enhanced styling"""
+        return """
+digraph G {
+    // Global graph attributes for professional look
+    graph [
+        rankdir=TB,
+        bgcolor="#f8f9fa",
+        fontname="Arial",
+        fontsize=16,
+        splines=ortho,
+        nodesep=0.8,
+        ranksep=1.2,
+        margin=0.5,
+        pad=0.5,
+        overlap=false,
+        compound=true,
+        concentrate=true
+    ];
+    
+    // Global node attributes with enhanced styling
+    node [
+        shape=box,
+        style="filled,rounded,bold",
+        fillcolor="#ffffff",
+        fontname="Arial",
+        fontsize=14,
+        fontcolor="#2c3e50",
+        penwidth=3,
+        margin="0.4,0.3",
+        width=2,
+        height=1
+    ];
+    
+    // Global edge attributes with professional styling
+    edge [
+        fontname="Arial",
+        fontsize=12,
+        fontcolor="#666666",
+        penwidth=2.5,
+        arrowhead=vee,
+        arrowsize=0.8,
+        color="#666666"
+    ];
+    
+    // Define professional color scheme
+    subgraph cluster_legend {
+        label="Component Types";
+        style="filled,rounded";
+        color="#cccccc";
+        fillcolor="#f0f0f0";
+        fontsize=14;
+        fontcolor="#2c3e50";
+        
+        legend_web [label="Web/UI", style="filled,rounded", fillcolor="#007bd3", fontcolor="white"];
+        legend_service [label="Service", style="filled,rounded", fillcolor="#48b0f1", fontcolor="white"];
+        legend_data [label="Data", style="filled,rounded", fillcolor="#16a085", fontcolor="white"];
+        legend_external [label="External", style="filled,rounded", fillcolor="#f39c12", fontcolor="white"];
+        
+        legend_web -> legend_service -> legend_data -> legend_external [style=invis];
+    }
+"""
+    
+    def _generate_enhanced_flowchart(self, components):
+        """Generate enhanced Mermaid flowchart with styling"""
+        mermaid_code = self._get_professional_mermaid_theme()
+        
+        mermaid_code += """
+flowchart TB
+    %% Define custom node styles
+    classDef webNode fill:#007bd3,stroke:#005a9e,stroke-width:3px,color:#fff,font-weight:bold
+    classDef serviceNode fill:#48b0f1,stroke:#2e86ab,stroke-width:3px,color:#fff,font-weight:bold
+    classDef dataNode fill:#16a085,stroke:#0e6251,stroke-width:3px,color:#fff,font-weight:bold
+    classDef externalNode fill:#f39c12,stroke:#d68910,stroke-width:3px,color:#fff,font-weight:bold
+    
+    %% Define link styles
+    linkStyle default stroke:#666,stroke-width:2px,fill:none
+    
+    %% Add subgraph styling
+    subgraph sg1 ["🌐 Web Tier"]
+        direction TB
+        style sg1 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+"""
+        
+        # Add components to flowchart
+        web_components = []
+        service_components = []
+        data_components = []
+        
+        for name, comp in components.items():
+            comp_type = comp.get('type', 'unknown')
+            if 'web' in comp_type or 'frontend' in comp_type:
+                web_components.append(name)
+            elif 'data' in comp_type or 'redis' in name or 'postgres' in name or 'mongo' in name:
+                data_components.append(name)
+            else:
+                service_components.append(name)
+        
+        # Add web components
+        for comp in web_components:
+            mermaid_code += f'        {comp.replace("-", "_")}["{comp}"]\n'
+        
+        mermaid_code += """    end
+    
+    subgraph sg2 ["⚙️ Service Tier"]
+        direction TB
+        style sg2 fill:#e8f5e8,stroke:#4caf50,stroke-width:2px
+"""
+        
+        # Add service components
+        for comp in service_components:
+            mermaid_code += f'        {comp.replace("-", "_")}["{comp}"]\n'
+        
+        mermaid_code += """    end
+    
+    subgraph sg3 ["💾 Data Tier"]
+        direction TB
+        style sg3 fill:#fff3e0,stroke:#ff9800,stroke-width:2px
+"""
+        
+        # Add data components
+        for comp in data_components:
+            mermaid_code += f'        {comp.replace("-", "_")}["{comp}"]\n'
+        
+        mermaid_code += """    end
+    
+    %% Define connections
+"""
+        
+        # Add connections between tiers
+        for web_comp in web_components:
+            for service_comp in service_components:
+                mermaid_code += f'    {web_comp.replace("-", "_")} --> {service_comp.replace("-", "_")}\n'
+        
+        for service_comp in service_components:
+            for data_comp in data_components:
+                mermaid_code += f'    {service_comp.replace("-", "_")} --> {data_comp.replace("-", "_")}\n'
+        
+        # Apply styles
+        for comp in web_components:
+            mermaid_code += f'    class {comp.replace("-", "_")} webNode\n'
+        for comp in service_components:
+            mermaid_code += f'    class {comp.replace("-", "_")} serviceNode\n'
+        for comp in data_components:
+            mermaid_code += f'    class {comp.replace("-", "_")} dataNode\n'
+        
+        return mermaid_code
     
     def _check_mermaid_cli(self) -> bool:
         """Check if Mermaid CLI is available"""
@@ -135,14 +358,14 @@ class MermaidGraphvizGenerator:
             return generated_diagrams
     
     def create_architecture_flowchart(self, intelligence_data: Dict[str, Any]) -> Optional[str]:
-        """Create architecture flowchart using Mermaid"""
+        """Create professional architecture flowchart using Mermaid"""
         try:
             components = intelligence_data.get('components', {})
             if not components:
                 return None
             
-            # Generate Mermaid flowchart
-            mermaid_code = self._generate_architecture_flowchart_mermaid(components)
+            # Generate enhanced Mermaid flowchart
+            mermaid_code = self._generate_enhanced_flowchart(components)
             
             # Render diagram
             output_path = self.charts_dir / "architecture_flowchart.png"
@@ -383,14 +606,17 @@ graph TD
         return mermaid_code
     
     def _generate_component_relationship_dot(self, components: Dict[str, Any]) -> str:
-        """Generate Graphviz DOT code for component relationships"""
-        dot_code = """
-digraph ComponentRelationships {
-    rankdir=TB;
-    node [shape=box, style=filled, fontname="Arial", fontsize=10];
-    edge [fontname="Arial", fontsize=8];
+        """Generate professional Graphviz DOT code for component relationships"""
+        # Start with professional template
+        dot_code = self._get_professional_dot_template()
+        
+        dot_code += """
+    // Component Relationships Diagram
+    label="Component Relationships\\nGenerated by Application Intelligence Platform";
+    labelloc=t;
+    labeljust=c;
     
-    // Define colors
+    // Define node styles by tier
     node [fillcolor="#007bd3", fontcolor="white"] // Web tier
     {
 """

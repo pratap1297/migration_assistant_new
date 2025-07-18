@@ -737,6 +737,22 @@ This report presents a comprehensive analysis of the application repository. The
             except Exception as e:
                 self._safe_print(f"⚠️  [WORD-GEN] Error generating Mermaid/Graphviz diagrams: {e}")
             
+            # Generate Cloud Architecture diagrams
+            try:
+                from analysis.cloud_diagram_generator import CloudDiagramGenerator
+                
+                cloud_generator = CloudDiagramGenerator(charts_dir)
+                cloud_diagrams = cloud_generator.generate_all_cloud_diagrams(intelligence_data)
+                generated_diagrams.extend(cloud_diagrams)
+                
+                self._safe_print(f"☁️  [WORD-GEN] Added {len(cloud_diagrams)} Cloud architecture diagrams")
+                
+            except ImportError as e:
+                self._safe_print(f"⚠️  [WORD-GEN] Cloud diagram generator not available: {e}")
+                self._safe_print(f"   Install with: pip install diagrams")
+            except Exception as e:
+                self._safe_print(f"⚠️  [WORD-GEN] Error generating cloud diagrams: {e}")
+            
             # Insert diagrams into document
             diagram_titles = {
                 # Enhanced matplotlib diagrams
@@ -767,7 +783,17 @@ This report presents a comprehensive analysis of the application repository. The
                 # Graphviz diagrams
                 'component_relationship_graph.png': 'Component Relationships (Graphviz)',
                 'data_flow_diagram.png': 'Data Flow Diagram (Graphviz)',
-                'migration_strategy_diagram.png': 'Migration Strategy (Graphviz)'
+                'migration_strategy_diagram.png': 'Migration Strategy (Graphviz)',
+                
+                # Cloud Architecture diagrams (diagrams package)
+                'system_architecture.png': 'System Architecture Overview (Cloud)',
+                'microservices_architecture.png': 'Microservices Architecture (Cloud)',
+                'data_flow_architecture.png': 'Data Flow Architecture (Cloud)',
+                'deployment_architecture.png': 'Deployment Architecture (Cloud)',
+                'cicd_architecture.png': 'CI/CD Pipeline Architecture (Cloud)',
+                'security_architecture.png': 'Security Architecture (Cloud)',
+                'container_architecture.png': 'Container Architecture (Cloud)',
+                'high_availability_architecture.png': 'High Availability Architecture (Cloud)'
             }
             
             # Import diagram summary analyzer
