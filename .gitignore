@@ -15,6 +15,28 @@ ENV/
 # Markdown files
 *.md
 
+# Output files
+reports/*.json
+reports/*.docx
+reports/*.doc
+enhanced_reports/*.json
+enhanced_reports/*.docx
+enhanced_reports/*.doc
+fixed_reports/*.json
+fixed_reports/*.docx
+fixed_reports/*.doc
+other_files/*.json
+other_files/*.docx
+other_files/*.doc
+sprint2_*/*.json
+sprint2_*/*.docx
+sprint2_*/*.doc
+sprint3_*/*.json
+sprint3_*/*.docx
+sprint3_*/*.doc
+*_enhanced_intelligence_*.json
+*_intelligence_*.json
+
 # Test files and directories
 tests/
 test_*
