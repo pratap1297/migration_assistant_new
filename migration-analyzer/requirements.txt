@@ -1,0 +1,30 @@
+# Core dependencies
+python-dotenv
+dataclasses-json
+
+# Language parsers
+javalang
+esprima
+
+# LLM
+google-generativeai
+langchain-google-genai
+
+# Git operations
+gitpython
+
+# Testing
+pytest
+pytest-mock
+pytest-asyncio
+
+# Utilities
+pyyaml
+
+# Sprint 2 dependencies
+networkx
+matplotlib
+seaborn
+
+# Document generation
+python-docx

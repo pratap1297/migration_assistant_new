@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/end-of-game/openshift-voting-app",
+  "analysis_date": "2025-07-16T17:56:40.636317",
+  "semantic_summary": {
+    "voting-app": {
+      "files_analyzed": 6,
+      "total_endpoints": 2,
+      "total_db_operations": 9,
+      "total_http_calls": 0
+    }
+  },
+  "security_summary": {}
+}

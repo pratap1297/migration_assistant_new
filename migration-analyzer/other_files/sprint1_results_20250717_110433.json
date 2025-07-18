@@ -1,0 +1,13 @@
+{
+  "repository": "test_project",
+  "analysis_date": "2025-07-17T11:04:33.852326",
+  "semantic_summary": {
+    "root": {
+      "files_analyzed": 1,
+      "total_endpoints": 0,
+      "total_db_operations": 0,
+      "total_http_calls": 0
+    }
+  },
+  "security_summary": {}
+}

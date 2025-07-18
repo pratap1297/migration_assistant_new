@@ -1,0 +1,25 @@
+{
+  "repository": ".",
+  "analysis_date": "2025-07-16T17:41:55.866230",
+  "semantic_summary": {
+    "root": {
+      "files_analyzed": 20,
+      "total_endpoints": 1,
+      "total_db_operations": 0,
+      "total_http_calls": 0
+    }
+  },
+  "security_summary": {
+    "root": {
+      "auth_mechanisms": [
+        "basic (code reference)",
+        "jwt (code reference)",
+        "oauth (code reference)",
+        "api_key (code reference)"
+      ],
+      "encryption": [],
+      "hardcoded_secrets_count": 1,
+      "vulnerabilities_count": 0
+    }
+  }
+}

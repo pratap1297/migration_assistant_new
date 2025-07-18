@@ -1,0 +1,2537 @@
+{
+  "repository_url": "https://github.com/end-of-game/openshift-voting-app",
+  "analysis_timestamp": "2025-07-17T13:50:04.566351",
+  "summary": {
+    "total_components": 3,
+    "component_types": {
+      "microservice": 1,
+      "application": 2
+    },
+    "languages": [
+      "unknown",
+      "python"
+    ],
+    "containerization_status": 2,
+    "has_kubernetes": true,
+    "has_docker_compose": false,
+    "ci_cd_pipelines": 0,
+    "quality_gates": 0,
+    "security_scans": 0,
+    "external_services": 6,
+    "datasources": 0,
+    "secrets_management": 0,
+    "business_criticality": "LOW",
+    "compliance_requirements": [],
+    "security_findings": {
+      "hardcoded_secrets": 0,
+      "vulnerabilities": 0
+    },
+    "git_history": {
+      "total_commits": 0,
+      "active_contributors": 0,
+      "code_stability": "unknown",
+      "release_cadence": "Unknown",
+      "hotspot_files_count": 0,
+      "development_patterns": []
+    }
+  },
+  "components": {
+    "result": {
+      "name": "result",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\result",
+      "type": "application",
+      "language": "unknown",
+      "runtime": "nodejs",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "dependencies": [],
+      "external_dependencies": [],
+      "exposed_ports": [
+        8080
+      ],
+      "environment_variables": {
+        "TINI_VERSION": "v0.19.0",
+        "PORT": "8080"
+      },
+      "volumes": [],
+      "health_checks": [],
+      "deployment_info": {},
+      "business_context": {}
+    },
+    "worker": {
+      "name": "worker",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\worker",
+      "type": "application",
+      "language": "unknown",
+      "runtime": "unknown",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "dependencies": [],
+      "external_dependencies": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "volumes": [],
+      "health_checks": [],
+      "deployment_info": {},
+      "business_context": {}
+    },
+    "src": {
+      "name": "src",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\vote\\src",
+      "type": "microservice",
+      "language": "python",
+      "runtime": "flask",
+      "build_tool": "pip",
+      "packaging": "wheel",
+      "dependencies": [
+        "Flask",
+        "Redis",
+        "gunicorn"
+      ],
+      "external_dependencies": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "volumes": [],
+      "health_checks": [],
+      "deployment_info": {},
+      "business_context": {}
+    }
+  },
+  "documentation_insights": {
+    "application_purpose": "This application is a reworked voting application designed for easy deployment and management on OpenShift. It demonstrates different methods of deploying microservices within the OpenShift environment.",
+    "business_criticality": "LOW",
+    "compliance_requirements": [],
+    "security_considerations": [
+      "Allows default service account to run containers with any non-root user (specifically uid=1001 for the example).",
+      "Discusses building images with Dockerfiles for version control and source code management.",
+      "Mentions Source to Image (S2I) for deploying secured container images."
+    ],
+    "technology_stack": [
+      "OpenShift",
+      "oc CLI",
+      "git",
+      "Docker",
+      "PostgreSQL",
+      "Redis",
+      "Dockerfile",
+      "Source to Image (S2I)",
+      "postgresql",
+      "redis",
+      "kubernetes",
+      "docker"
+    ],
+    "deployment_model": [
+      "OpenShift",
+      "Container Images (pre-built)",
+      "Dockerfile (built by OpenShift)",
+      "Source to Image (S2I) (built by OpenShift)"
+    ],
+    "user_types": [
+      "Developers",
+      "DevOps engineers"
+    ],
+    "integration_points": [],
+    "performance_requirements": [],
+    "business_context_keywords": [
+      "voting application",
+      "microservices"
+    ],
+    "architecture_patterns": [
+      "microservices"
+    ]
+  },
+  "infrastructure": {
+    "containerization": {
+      "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\result\\Dockerfile": {
+        "base_images": [
+          {
+            "image": "node:10-slim",
+            "stage": null
+          }
+        ],
+        "exposed_ports": [
+          8080
+        ],
+        "environment_variables": {
+          "TINI_VERSION": "v0.19.0",
+          "PORT": "8080"
+        },
+        "commands": [
+          {
+            "type": "CMD",
+            "command": "[\"/tini\", \"--\", \"node\", \"server.js\"]"
+          }
+        ],
+        "workdir": "/app",
+        "user": "1001",
+        "volumes": [],
+        "labels": {},
+        "build_stages": [],
+        "package_managers": [
+          "npm"
+        ],
+        "installed_packages": [],
+        "analysis": {
+          "is_multistage": false,
+          "has_non_root_user": true,
+          "exposes_services": true,
+          "uses_environment_config": true
+        }
+      },
+      "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\vote\\Dockerfile": {
+        "base_images": [
+          {
+            "image": "python:3.9-slim",
+            "stage": null
+          }
+        ],
+        "exposed_ports": [
+          8080
+        ],
+        "environment_variables": {
+          "PATH": "/app/.local/bin/:${PATH}"
+        },
+        "commands": [
+          {
+            "type": "CMD",
+            "command": "[\"gunicorn\", \"app:app\", \"-b\", \"0.0.0.0:8080\", \"--log-file\", \"-\", \"--access-logfile\", \"-\", \"--workers\", \"4\", \"--keep-alive\", \"0\"]"
+          }
+        ],
+        "workdir": "/app",
+        "user": "1001",
+        "volumes": [],
+        "labels": {},
+        "build_stages": [],
+        "package_managers": [
+          "pip"
+        ],
+        "installed_packages": [],
+        "analysis": {
+          "is_multistage": false,
+          "has_non_root_user": true,
+          "exposes_services": true,
+          "uses_environment_config": true
+        }
+      },
+      "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\worker\\Dockerfile": {
+        "base_images": [
+          {
+            "image": "maven:3.5-jdk-8-alpine",
+            "stage": "build"
+          },
+          {
+            "image": "openjdk:8-jre",
+            "stage": null
+          }
+        ],
+        "exposed_ports": [],
+        "environment_variables": {},
+        "commands": [
+          {
+            "type": "CMD",
+            "command": "[\"java\", \"-XX:+UnlockExperimentalVMOptions\", \"-XX:+UseCGroupMemoryLimitForHeap\", \"-jar\", \"/worker-jar-with-dependencies.jar\"]"
+          }
+        ],
+        "workdir": "/app",
+        "user": "1001",
+        "volumes": [],
+        "labels": {},
+        "build_stages": [
+          "build"
+        ],
+        "package_managers": [
+          "apk",
+          "maven"
+        ],
+        "installed_packages": [],
+        "analysis": {
+          "is_multistage": true,
+          "has_non_root_user": true,
+          "exposes_services": false,
+          "uses_environment_config": false
+        }
+      }
+    },
+    "orchestration": {
+      "kubernetes": [
+        {
+          "resources": [
+            {
+              "kind": "ImageStream",
+              "apiVersion": "image.openshift.io/v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "Route",
+              "apiVersion": "route.openshift.io/v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "Service",
+              "apiVersion": "v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {},
+              "service_details": {
+                "type": "ClusterIP",
+                "ports": [
+                  {
+                    "name": null,
+                    "port": 8080,
+                    "targetPort": 8080,
+                    "protocol": "TCP"
+                  }
+                ],
+                "selector": {
+                  "app": "result"
+                },
+                "cluster_ip": null,
+                "external_name": null,
+                "load_balancer_ip": null
+              }
+            }
+          ],
+          "services": {
+            "result": {
+              "type": "ClusterIP",
+              "ports": [
+                {
+                  "name": null,
+                  "port": 8080,
+                  "targetPort": 8080,
+                  "protocol": "TCP"
+                }
+              ],
+              "selector": {
+                "app": "result"
+              },
+              "cluster_ip": null,
+              "external_name": null,
+              "load_balancer_ip": null
+            }
+          },
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 1,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "ImageStream",
+              "apiVersion": "image.openshift.io/v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "Route",
+              "apiVersion": "route.openshift.io/v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "Service",
+              "apiVersion": "v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {},
+              "service_details": {
+                "type": "ClusterIP",
+                "ports": [
+                  {
+                    "name": null,
+                    "port": 8080,
+                    "targetPort": 8080,
+                    "protocol": "TCP"
+                  }
+                ],
+                "selector": {
+                  "app": "vote"
+                },
+                "cluster_ip": null,
+                "external_name": null,
+                "load_balancer_ip": null
+              }
+            }
+          ],
+          "services": {
+            "vote": {
+              "type": "ClusterIP",
+              "ports": [
+                {
+                  "name": null,
+                  "port": 8080,
+                  "targetPort": 8080,
+                  "protocol": "TCP"
+                }
+              ],
+              "selector": {
+                "app": "vote"
+              },
+              "cluster_ip": null,
+              "external_name": null,
+              "load_balancer_ip": null
+            }
+          },
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 1,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "ImageStream",
+              "apiVersion": "image.openshift.io/v1",
+              "name": "worker",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "Template",
+              "apiVersion": "template.openshift.io/v1",
+              "name": "postgresql-ephemeral",
+              "namespace": "openshift",
+              "labels": {
+                "samples.operator.openshift.io/managed": "true"
+              },
+              "annotations": {
+                "description": "PostgreSQL database service, without persistent storage. For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.\n\nWARNING: Any data stored will be lost upon pod destruction. Only use this template for testing",
+                "iconClass": "icon-postgresql",
+                "openshift.io/display-name": "PostgreSQL (Ephemeral)",
+                "openshift.io/documentation-url": "https://docs.okd.io/latest/using_images/db_images/postgresql.html",
+                "openshift.io/long-description": "This template provides a standalone PostgreSQL server with a database created.  The database is not stored on persistent storage, so any restart of the service will result in all data being lost.  The database name, username, and password are chosen via parameters when provisioning this service.",
+                "openshift.io/provider-display-name": "Red Hat, Inc.",
+                "openshift.io/support-url": "https://access.redhat.com",
+                "samples.operator.openshift.io/version": "4.6.0-0.okd-2021-01-23-132511",
+                "tags": "database,postgresql"
+              }
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "Template",
+              "apiVersion": "template.openshift.io/v1",
+              "name": "redis-ephemeral",
+              "namespace": "openshift",
+              "labels": {
+                "samples.operator.openshift.io/managed": "true"
+              },
+              "annotations": {
+                "description": "Redis in-memory data structure store, without persistent storage. For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/redis-container/blob/master/5.\n\nWARNING: Any data stored will be lost upon pod destruction. Only use this template for testing",
+                "iconClass": "icon-redis",
+                "openshift.io/display-name": "Redis (Ephemeral)",
+                "openshift.io/documentation-url": "https://github.com/sclorg/redis-container/tree/master/5",
+                "openshift.io/long-description": "This template provides a standalone Redis server.  The data is not stored on persistent storage, so any restart of the service will result in all data being lost.",
+                "openshift.io/provider-display-name": "Red Hat, Inc.",
+                "openshift.io/support-url": "https://access.redhat.com",
+                "samples.operator.openshift.io/version": "4.6.0-0.okd-2021-01-23-132511",
+                "tags": "database,redis"
+              }
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "BuildConfig",
+              "apiVersion": "build.openshift.io/v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "BuildConfig",
+              "apiVersion": "build.openshift.io/v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "BuildConfig",
+              "apiVersion": "build.openshift.io/v1",
+              "name": "worker",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "worker",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "worker",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "BuildConfig",
+              "apiVersion": "build.openshift.io/v1",
+              "name": "result-s2i",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "result",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "BuildConfig",
+              "apiVersion": "build.openshift.io/v1",
+              "name": "vote-s2i",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "vote",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "BuildConfig",
+              "apiVersion": "build.openshift.io/v1",
+              "name": "worker-s2i",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        },
+        {
+          "resources": [
+            {
+              "kind": "DeploymentConfig",
+              "apiVersion": "apps.openshift.io/v1",
+              "name": "worker",
+              "namespace": "default",
+              "labels": {
+                "app": "voting-app"
+              },
+              "annotations": {}
+            }
+          ],
+          "services": {},
+          "deployments": {},
+          "configmaps": {},
+          "secrets": [],
+          "ingresses": {},
+          "persistent_volumes": {},
+          "service_dependencies": {},
+          "external_endpoints": [],
+          "analysis": {
+            "resource_count": 1,
+            "service_count": 0,
+            "deployment_count": 0,
+            "uses_configmaps": false,
+            "uses_secrets": false,
+            "has_ingress": false,
+            "has_persistent_storage": false
+          }
+        }
+      ]
+    },
+    "deployment_configs": []
+  },
+  "ci_cd_pipelines": {
+    "github_actions": [],
+    "jenkins": [],
+    "azure_devops": [],
+    "gitlab_ci": [],
+    "quality_gates": [],
+    "deployment_stages": []
+  },
+  "configuration": {
+    "properties_files": [],
+    "yaml_configs": [
+      {
+        "raw_config": {
+          "kind": "BuildConfig",
+          "apiVersion": "build.openshift.io/v1",
+          "metadata": {
+            "name": "result",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "strategy": {
+              "type": "Docker"
+            },
+            "source": {
+              "type": "Git",
+              "git": {
+                "uri": "https://github.com/Treeptik/openshift-voting-app.git",
+                "ref": "master"
+              },
+              "contextDir": "voting-app/result"
+            },
+            "output": {
+              "to": {
+                "kind": "ImageStreamTag",
+                "name": "result:latest"
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [
+          {
+            "path": "spec.source.git.uri",
+            "url": "https://github.com/Treeptik/openshift-voting-app.git",
+            "type": "http_endpoint"
+          }
+        ],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 3,
+          "has_datasources": false,
+          "has_external_services": true,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "result",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              },
+              {
+                "imageChangeParams": {
+                  "automatic": true,
+                  "containerNames": [
+                    "result"
+                  ],
+                  "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "result:latest"
+                  }
+                },
+                "type": "ImageChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "result"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "result"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "result"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "BuildConfig",
+          "apiVersion": "build.openshift.io/v1",
+          "metadata": {
+            "name": "vote",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "strategy": {
+              "type": "Docker"
+            },
+            "source": {
+              "type": "Git",
+              "git": {
+                "uri": "https://github.com/Treeptik/openshift-voting-app.git",
+                "ref": "master"
+              },
+              "contextDir": "voting-app/vote"
+            },
+            "output": {
+              "to": {
+                "kind": "ImageStreamTag",
+                "name": "vote:latest"
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [
+          {
+            "path": "spec.source.git.uri",
+            "url": "https://github.com/Treeptik/openshift-voting-app.git",
+            "type": "http_endpoint"
+          }
+        ],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 3,
+          "has_datasources": false,
+          "has_external_services": true,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "vote",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              },
+              {
+                "imageChangeParams": {
+                  "automatic": true,
+                  "containerNames": [
+                    "vote"
+                  ],
+                  "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "vote:latest"
+                  }
+                },
+                "type": "ImageChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "vote"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "vote"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "vote"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "BuildConfig",
+          "apiVersion": "build.openshift.io/v1",
+          "metadata": {
+            "name": "worker",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "strategy": {
+              "type": "Docker"
+            },
+            "source": {
+              "type": "Git",
+              "git": {
+                "uri": "https://github.com/Treeptik/openshift-voting-app.git",
+                "ref": "master"
+              },
+              "contextDir": "voting-app/worker"
+            },
+            "output": {
+              "to": {
+                "kind": "ImageStreamTag",
+                "name": "worker:latest"
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [
+          {
+            "path": "spec.source.git.uri",
+            "url": "https://github.com/Treeptik/openshift-voting-app.git",
+            "type": "http_endpoint"
+          }
+        ],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 3,
+          "has_datasources": false,
+          "has_external_services": true,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "worker",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              },
+              {
+                "imageChangeParams": {
+                  "automatic": true,
+                  "containerNames": [
+                    "worker"
+                  ],
+                  "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "worker:latest"
+                  }
+                },
+                "type": "ImageChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "worker"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "worker"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "worker"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "result",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "result"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "result"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "result",
+                    "image": "mgrillet/result:latest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "vote",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "vote"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "vote"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "vote",
+                    "image": "mgrillet/vote:latest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "worker",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "worker"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "worker"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "worker",
+                    "image": "mgrillet/worker:latest"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "BuildConfig",
+          "apiVersion": "build.openshift.io/v1",
+          "metadata": {
+            "name": "result-s2i",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "strategy": {
+              "sourceStrategy": {
+                "from": {
+                  "kind": "DockerImage",
+                  "name": "centos/nodejs-10-centos7"
+                }
+              },
+              "type": "Source"
+            },
+            "source": {
+              "type": "Git",
+              "git": {
+                "uri": "https://github.com/Treeptik/openshift-voting-app.git",
+                "ref": "master"
+              },
+              "contextDir": "voting-app/result/src"
+            },
+            "output": {
+              "to": {
+                "kind": "ImageStreamTag",
+                "name": "result:latest"
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [
+          {
+            "path": "spec.source.git.uri",
+            "url": "https://github.com/Treeptik/openshift-voting-app.git",
+            "type": "http_endpoint"
+          }
+        ],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": true,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "result",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              },
+              {
+                "imageChangeParams": {
+                  "automatic": true,
+                  "containerNames": [
+                    "result"
+                  ],
+                  "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "result:latest"
+                  }
+                },
+                "type": "ImageChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "result"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "result"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "result"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "BuildConfig",
+          "apiVersion": "build.openshift.io/v1",
+          "metadata": {
+            "name": "vote-s2i",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "strategy": {
+              "sourceStrategy": {
+                "from": {
+                  "kind": "DockerImage",
+                  "name": "centos/python-38-centos7"
+                }
+              },
+              "type": "Source"
+            },
+            "source": {
+              "type": "Git",
+              "git": {
+                "uri": "https://github.com/Treeptik/openshift-voting-app.git",
+                "ref": "master"
+              },
+              "contextDir": "voting-app/vote/src"
+            },
+            "output": {
+              "to": {
+                "kind": "ImageStreamTag",
+                "name": "vote:latest"
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [
+          {
+            "path": "spec.source.git.uri",
+            "url": "https://github.com/Treeptik/openshift-voting-app.git",
+            "type": "http_endpoint"
+          }
+        ],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": true,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "vote",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              },
+              {
+                "imageChangeParams": {
+                  "automatic": true,
+                  "containerNames": [
+                    "vote"
+                  ],
+                  "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "vote:latest"
+                  }
+                },
+                "type": "ImageChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "vote"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "vote"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "vote"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "BuildConfig",
+          "apiVersion": "build.openshift.io/v1",
+          "metadata": {
+            "name": "worker-s2i",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "strategy": {
+              "sourceStrategy": {
+                "from": {
+                  "kind": "DockerImage",
+                  "name": "fabric8/s2i-java:3.1-java8"
+                }
+              }
+            },
+            "source": {
+              "type": "Git",
+              "git": {
+                "uri": "https://github.com/Treeptik/openshift-voting-app.git",
+                "ref": "master"
+              },
+              "contextDir": "voting-app/worker/src"
+            },
+            "output": {
+              "to": {
+                "kind": "ImageStreamTag",
+                "name": "worker:latest"
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [
+          {
+            "path": "spec.source.git.uri",
+            "url": "https://github.com/Treeptik/openshift-voting-app.git",
+            "type": "http_endpoint"
+          }
+        ],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": true,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      },
+      {
+        "raw_config": {
+          "kind": "DeploymentConfig",
+          "apiVersion": "apps.openshift.io/v1",
+          "metadata": {
+            "name": "worker",
+            "labels": {
+              "app": "voting-app"
+            }
+          },
+          "spec": {
+            "triggers": [
+              {
+                "type": "ConfigChange"
+              },
+              {
+                "imageChangeParams": {
+                  "automatic": true,
+                  "containerNames": [
+                    "worker"
+                  ],
+                  "from": {
+                    "kind": "ImageStreamTag",
+                    "name": "worker:latest"
+                  }
+                },
+                "type": "ImageChange"
+              }
+            ],
+            "replicas": 1,
+            "selector": {
+              "app": "worker"
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "worker"
+                }
+              },
+              "spec": {
+                "securityContext": {
+                  "runAsUser": 1001
+                },
+                "containers": [
+                  {
+                    "name": "worker",
+                    "env": [
+                      {
+                        "name": "JAVA_APP_JAR",
+                        "value": "worker-jar-with-dependencies.jar"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "profiles": [],
+        "datasources": [],
+        "external_services": [],
+        "messaging": [],
+        "security_config": {},
+        "server_config": {},
+        "feature_flags": {},
+        "secrets_references": [],
+        "cloud_config": {},
+        "analysis": {
+          "config_depth": 4,
+          "has_datasources": false,
+          "has_external_services": false,
+          "has_messaging": false,
+          "has_security_config": false,
+          "uses_profiles": false,
+          "secrets_count": 0,
+          "uses_cloud_services": false
+        }
+      }
+    ],
+    "environment_variables": {},
+    "external_services": [
+      {
+        "path": "spec.source.git.uri",
+        "url": "https://github.com/Treeptik/openshift-voting-app.git",
+        "type": "http_endpoint"
+      },
+      {
+        "path": "spec.source.git.uri",
+        "url": "https://github.com/Treeptik/openshift-voting-app.git",
+        "type": "http_endpoint"
+      },
+      {
+        "path": "spec.source.git.uri",
+        "url": "https://github.com/Treeptik/openshift-voting-app.git",
+        "type": "http_endpoint"
+      },
+      {
+        "path": "spec.source.git.uri",
+        "url": "https://github.com/Treeptik/openshift-voting-app.git",
+        "type": "http_endpoint"
+      },
+      {
+        "path": "spec.source.git.uri",
+        "url": "https://github.com/Treeptik/openshift-voting-app.git",
+        "type": "http_endpoint"
+      },
+      {
+        "path": "spec.source.git.uri",
+        "url": "https://github.com/Treeptik/openshift-voting-app.git",
+        "type": "http_endpoint"
+      }
+    ],
+    "datasources": [],
+    "secrets_management": []
+  },
+  "security_posture": {},
+  "semantic_analysis": {
+    "voting-app": [
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\result\\src\\server.js",
+        "language": "javascript",
+        "api_endpoints": [
+          {
+            "path": "/",
+            "methods": [
+              "GET"
+            ],
+            "handler_function": "",
+            "line_number": 84
+          }
+        ],
+        "functions": [],
+        "classes": [],
+        "database_interactions": [
+          {
+            "operation": "SELECT",
+            "table": null,
+            "line_number": 50,
+            "raw_query": "SELECT vote, COUNT(id) AS count FROM votes GROUP BY vote"
+          }
+        ],
+        "outbound_http_calls": [],
+        "notes": []
+      },
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\result\\src\\views\\angular.min.js",
+        "language": "javascript",
+        "api_endpoints": [],
+        "functions": [],
+        "classes": [],
+        "database_interactions": [
+          {
+            "operation": "MONGO_FIND",
+            "table": null,
+            "line_number": 44,
+            "raw_query": null
+          },
+          {
+            "operation": "MONGO_FIND",
+            "table": null,
+            "line_number": 293,
+            "raw_query": null
+          },
+          {
+            "operation": "MONGO_FIND",
+            "table": null,
+            "line_number": 293,
+            "raw_query": null
+          }
+        ],
+        "outbound_http_calls": [],
+        "notes": []
+      },
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\result\\src\\views\\app.js",
+        "language": "javascript",
+        "api_endpoints": [],
+        "functions": [],
+        "classes": [],
+        "database_interactions": [],
+        "outbound_http_calls": [],
+        "notes": []
+      },
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\result\\src\\views\\socket.io.js",
+        "language": "javascript",
+        "api_endpoints": [],
+        "functions": [],
+        "classes": [],
+        "database_interactions": [],
+        "outbound_http_calls": [],
+        "notes": []
+      },
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\vote\\src\\app.py",
+        "language": "python",
+        "api_endpoints": [
+          {
+            "path": "/",
+            "methods": [
+              "POST",
+              "GET"
+            ],
+            "handler_function": "",
+            "line_number": 24
+          }
+        ],
+        "functions": [
+          {
+            "name": "get_redis",
+            "start_line": 19,
+            "end_line": 22,
+            "calls": [
+              "hasattr",
+              "Redis"
+            ],
+            "decorators": []
+          },
+          {
+            "name": "hello",
+            "start_line": 25,
+            "end_line": 47,
+            "calls": [
+              "app.route",
+              "request.cookies.get",
+              "make_response",
+              "resp.set_cookie",
+              "get_redis",
+              "app.logger.info",
+              "json.dumps",
+              "redis.rpush",
+              "render_template",
+              "hex",
+              "random.getrandbits"
+            ],
+            "decorators": [
+              "app.route('/', methods=['POST', 'GET'])"
+            ]
+          }
+        ],
+        "classes": [],
+        "database_interactions": [
+          {
+            "operation": "REDIS_OP",
+            "table": null,
+            "line_number": 37,
+            "raw_query": null
+          }
+        ],
+        "outbound_http_calls": [],
+        "notes": []
+      },
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\worker\\src\\src\\main\\java\\worker\\Worker.java",
+        "language": "java",
+        "api_endpoints": [],
+        "functions": [
+          {
+            "name": "Worker.main",
+            "start_line": 9,
+            "end_line": 0,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Worker.updateVote",
+            "start_line": 31,
+            "end_line": 0,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Worker.connectToRedis",
+            "start_line": 48,
+            "end_line": 0,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Worker.connectToDB",
+            "start_line": 66,
+            "end_line": 0,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Worker.sleep",
+            "start_line": 96,
+            "end_line": 0,
+            "calls": [],
+            "decorators": []
+          }
+        ],
+        "classes": [
+          {
+            "name": "Worker",
+            "start_line": 8,
+            "end_line": 0,
+            "methods": [
+              "main",
+              "updateVote",
+              "connectToRedis",
+              "connectToDB",
+              "sleep"
+            ],
+            "base_classes": []
+          }
+        ],
+        "database_interactions": [
+          {
+            "operation": "INSERT",
+            "table": null,
+            "line_number": 32,
+            "raw_query": "INSERT INTO votes (id, vote) VALUES (?, ?)"
+          },
+          {
+            "operation": "UPDATE",
+            "table": null,
+            "line_number": 40,
+            "raw_query": "UPDATE votes SET vote = ? WHERE id = ?"
+          },
+          {
+            "operation": "UNKNOWN",
+            "table": null,
+            "line_number": 83,
+            "raw_query": "CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL UNIQUE, vote VARCHAR(255) NOT NULL)"
+          },
+          {
+            "operation": "REDIS_OP",
+            "table": null,
+            "line_number": 17,
+            "raw_query": null
+          }
+        ],
+        "outbound_http_calls": [],
+        "notes": []
+      },
+      {
+        "file_path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\app_intelligence_u9s7z_ms\\voting-app\\worker\\src\\src\\Worker\\Program.cs",
+        "language": "csharp",
+        "api_endpoints": [],
+        "functions": [
+          {
+            "name": "Program.Main",
+            "start_line": 15,
+            "end_line": 15,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.if",
+            "start_line": 34,
+            "end_line": 34,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.if",
+            "start_line": 45,
+            "end_line": 45,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.UpdateVote",
+            "start_line": 52,
+            "end_line": 52,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.OpenDbConnection",
+            "start_line": 69,
+            "end_line": 69,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.NpgsqlConnection",
+            "start_line": 77,
+            "end_line": 77,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.votes",
+            "start_line": 96,
+            "end_line": 96,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.VARCHAR",
+            "start_line": 96,
+            "end_line": 96,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.VARCHAR",
+            "start_line": 97,
+            "end_line": 97,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.OpenRedisConnection",
+            "start_line": 105,
+            "end_line": 105,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.GetIp",
+            "start_line": 126,
+            "end_line": 126,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.UpdateVote",
+            "start_line": 133,
+            "end_line": 133,
+            "calls": [],
+            "decorators": []
+          },
+          {
+            "name": "Program.votes",
+            "start_line": 138,
+            "end_line": 138,
+            "calls": [],
+            "decorators": []
+          }
+        ],
+        "classes": [
+          {
+            "name": "Program",
+            "start_line": 13,
+            "end_line": 13,
+            "methods": [
+              "Main",
+              "if",
+              "if",
+              "UpdateVote",
+              "OpenDbConnection",
+              "NpgsqlConnection",
+              "votes",
+              "VARCHAR",
+              "VARCHAR",
+              "OpenRedisConnection",
+              "GetIp",
+              "UpdateVote",
+              "votes"
+            ],
+            "base_classes": []
+          }
+        ],
+        "database_interactions": [
+          {
+            "operation": "ADO_EXECUTE",
+            "table": null,
+            "line_number": 58,
+            "raw_query": null
+          },
+          {
+            "operation": "ADO_EXECUTE",
+            "table": null,
+            "line_number": 100,
+            "raw_query": null
+          },
+          {
+            "operation": "ADO_EXECUTE",
+            "table": null,
+            "line_number": 141,
+            "raw_query": null
+          },
+          {
+            "operation": "ADO_EXECUTE",
+            "table": null,
+            "line_number": 146,
+            "raw_query": null
+          }
+        ],
+        "outbound_http_calls": [],
+        "notes": []
+      }
+    ]
+  },
+  "git_history": {
+    "total_commits": 0,
+    "active_contributors": 0,
+    "commit_frequency": {},
+    "commit_types": {},
+    "hotspot_files": [],
+    "development_patterns": [],
+    "release_cadence": "Unknown",
+    "code_stability": "unknown",
+    "team_velocity": {}
+  },
+  "comprehensive_synthesis": {
+    "executive_summary": "The 'voting-app' is a microservices-based application deployed on OpenShift, demonstrating containerization and CI/CD principles. It consists of a 'result' (Node.js), 'vote' (Python/Flask), and 'worker' (Java) component, orchestrated using OpenShift primitives like ImageStreams, Routes, and BuildConfigs. The application's purpose is to showcase deployment patterns on OpenShift, with low business criticality. Key findings indicate a nascent adoption of modern DevOps practices, with significant opportunities for improving operational maturity, security posture, and leveraging the full potential of the OpenShift platform. The current technology stack is a mix of Node.js, Python, and Java, containerized with Docker. While the application demonstrates basic microservices architecture, its Git history is absent, suggesting a lack of mature development and collaboration practices. The identified external dependencies (PostgreSQL and Redis, though ephemeral) point to potential state management needs. Strategic implications include the need to formalize development workflows, implement robust monitoring, and mature the CI/CD pipeline to support more complex deployments and ensure reliability.",
+    "architecture_assessment": "The application follows a microservices architecture, with distinct components for 'result', 'vote', and 'worker'. This style promotes modularity and independent scaling. The technology stack is polyglot, utilizing Node.js for 'result', Python (Flask) for 'vote', and Java for 'worker'. This polyglot nature can offer flexibility but also introduces operational complexity in terms of diverse runtime management and tooling. Containerization using Docker is a core strength, facilitating consistent deployments across environments. The orchestration layer leverages OpenShift primitives like ImageStreams, Routes, and DeploymentConfigs. However, the absence of standard Kubernetes Deployments in favor of DeploymentConfigs suggests a potential dependency on OpenShift-specific features, which might limit portability. \n\nScalability is implicitly supported by containerization and OpenShift's orchestration capabilities, but specific scaling strategies (e.g., Horizontal Pod Autoscalers) are not explicitly detailed. Performance considerations are likely tied to the individual service implementations and base images used. The 'result' component uses `node:10-slim`, the 'vote' component uses `python:3.9-slim`, and the 'worker' component uses a multi-stage Dockerfile with `maven` and `openjdk:8-jre`. The use of `slim` images is a good practice for reducing image size. \n\nStrengths include: adherence to microservices principles, containerization, and leveraging OpenShift for orchestration. Weaknesses include: potential over-reliance on OpenShift-specific resources (DeploymentConfigs), lack of mature CI/CD pipelines, absence of Git history indicating underdeveloped development practices, and the use of ephemeral external dependencies (PostgreSQL/Redis), implying potential data loss and lack of state persistence which is critical for most real-world applications.",
+    "technology_modernization_plan": "The current technology debt is moderate, primarily stemming from the lack of mature development processes and the use of potentially outdated base images for some components. Specifically, the `node:10-slim` base image for the 'result' component is end-of-life and poses security risks. The 'worker' component's reliance on Java 8 might also be a point for modernization. \n\nModernization priorities should focus on: \n1. **Base Image Updates:** Upgrade Node.js to a supported LTS version (e.g., Node 18 or 20) and consider updating the Java runtime to a newer version if feasible for the 'worker' component. \n2. **Kubernetes Native Deployments:** Transition from OpenShift DeploymentConfigs to standard Kubernetes Deployments for better portability and broader ecosystem compatibility. \n3. **State Management:** For any component requiring persistent data (e.g., if the voting mechanism stores results persistently), replace ephemeral dependencies with stateful solutions like managed PostgreSQL or Redis with persistent storage.\n4. **Dependency Management:** Regularly review and update application dependencies (Flask, Redis clients, etc.) to address security vulnerabilities and leverage new features.\n\nCloud readiness is high due to containerization, which makes it portable across cloud providers. However, the OpenShift-specific configurations might require adjustments for non-OpenShift Kubernetes environments. \n\n**Technology Upgrade Roadmap:**\n*   **Short-term (1-3 months):** Update Node.js base image, upgrade `gunicorn` and Flask dependencies, assess and potentially update Java base image and dependencies. Refactor DeploymentConfigs to Kubernetes Deployments.\n*   **Medium-term (3-9 months):** Implement persistent storage for any data-holding components. Explore migrating from ephemeral Redis to a more robust solution. Integrate automated security scanning into the CI pipeline.\n*   **Long-term (9+ months):** Evaluate language version upgrades for Python and Java if required for future feature development or security patching.",
+    "security_recommendations": "The current security posture evaluation is limited due to the absence of specific security scanning reports or configurations. However, several areas for improvement are evident:\n\n**Critical Security Gaps and Vulnerabilities:**\n1.  **Outdated Base Images:** The `node:10-slim` base image is past its End-of-Life and likely contains unpatched vulnerabilities. Similarly, Java 8 might have known vulnerabilities depending on the specific JRE version. \n2.  **Lack of Secrets Management:** No explicit secrets management is indicated. Hardcoded credentials or sensitive information could be present within the application or its configuration.\n3.  **No Security Scanning:** There's no indication of static analysis security testing (SAST), dynamic analysis security testing (DAST), or software composition analysis (SCA) being integrated into the workflow.\n4.  **Minimal Network Segmentation:** While not explicitly detailed, microservices often require fine-grained network policies to limit communication between components, which is not apparent.\n5.  **Default Service Account Usage:** The application mentions allowing the default service account to run containers with a non-root user. While using a non-root user is good practice, relying on the *default* service account without specific role-based access control (RBAC) can be a security risk if not properly restricted.\n\n**Compliance and Regulatory Considerations:**\nIf the application handles sensitive data or falls under specific regulations (e.g., GDPR, HIPAA), the current setup might not be compliant due to potential vulnerabilities and lack of audit trails.\n\n**Security Improvement Recommendations:**\n1.  **Update Base Images:** Immediately update `node:10-slim` to a current LTS version (e.g., Node 18 or 20) and review Java 8 usage. \n2.  **Implement Secrets Management:** Integrate with a secrets management solution (e.g., Kubernetes Secrets, HashiCorp Vault, or cloud provider secrets managers) for all sensitive configurations.\n3.  **Integrate Security Scanning Tools:** Incorporate SAST, DAST, and SCA tools into the CI/CD pipeline to identify and remediate vulnerabilities early.\n4.  **Implement Network Policies:** Define and enforce NetworkPolicies in Kubernetes to restrict inter-service communication based on the principle of least privilege.\n5.  **Least Privilege RBAC:** Configure specific service accounts with minimal necessary permissions for each microservice, rather than relying on broad default service account permissions.\n6.  **Regular Dependency Updates:** Establish a process for regularly updating all application dependencies to patch known vulnerabilities.\n7.  **Code Reviews with Security Focus:** Ensure code reviews include a security checklist to catch potential vulnerabilities before deployment.",
+    "operational_maturity": "The operational maturity of this application appears to be in its early stages. The presence of OpenShift-specific resources like ImageStreams, Routes, and DeploymentConfigs indicates a managed Kubernetes environment, likely OpenShift. However, the analysis reveals significant gaps:\n\n**CI/CD Pipeline Maturity Assessment:** \n- The `ci_cd_pipelines` section is entirely empty, indicating a lack of defined or automated CI/CD processes. The presence of `BuildConfig` in OpenShift suggests that builds are likely triggered by OpenShift, but the automation, testing, and deployment stages are not detailed.\n- Deployment is managed via `DeploymentConfig` rather than standard Kubernetes `Deployments`, which is less flexible and portable.\n\n**DevOps Practices Evaluation:**\n- The absence of Git history (commits, contributors, release cadence) suggests a disconnect from core DevOps principles like version control, collaboration, and continuous feedback.\n- The `business_context` and `deployment_info` are empty, implying a lack of detailed operational context or understanding of how these components fit into the broader business landscape.\n\n**Monitoring and Observability Gaps:**\n- There is no mention of logging, metrics collection, or tracing mechanisms. Understanding application health, performance, and user behavior is severely limited.\n- The use of `gunicorn` with `--log-file -` and `--access-logfile -` implies logs are sent to stdout/stderr, which is a basic requirement for containerized applications but not comprehensive observability.\n\n**Operational Excellence Recommendations:**\n1.  **Establish CI/CD Pipelines:** Implement automated CI pipelines for building, testing, and deploying each microservice. This should include automated unit and integration tests.\n2.  **Integrate GitOps:** If Git is used, establish GitOps practices for declarative infrastructure and application management, ensuring changes are versioned and auditable.\n3.  **Implement Centralized Logging:** Deploy a centralized logging solution (e.g., EFK stack, Loki) to aggregate and analyze logs from all microservices.\n4.  **Implement Application Monitoring:** Integrate Prometheus/Grafana or similar tools to collect and visualize metrics from each service (e.g., request latency, error rates, resource utilization).\n5.  **Introduce Tracing:** Implement distributed tracing (e.g., Jaeger, Zipkin) to track requests across microservices, aiding in debugging and performance analysis.\n6.  **Define SLOs/SLIs:** Establish Service Level Objectives (SLOs) and Service Level Indicators (SLIs) for each microservice to measure and track performance against business requirements.\n7.  **Automate Health Checks:** Ensure readiness and liveness probes are configured for all deployed containers to enable Kubernetes/OpenShift to manage pod health effectively.",
+    "business_impact_analysis": "The application is described as a \"reworked voting application designed for easy deployment and management on OpenShift\" with a stated business criticality of 'LOW'. This suggests that any downtime or performance degradation would have minimal impact on core business operations or revenue. \n\n**User Impact Analysis:** The primary users are identified as 'Developers' and 'DevOps engineers', implying this is likely a demonstration or internal tool rather than a customer-facing application. Therefore, user impact would be limited to these operational teams. If used for a real voting scenario, the low criticality implies it's not a mission-critical function.\n\n**Revenue and Operational Implications:** Given the low business criticality, the direct impact on revenue is likely negligible. Operationally, the main implication is the potential learning curve and effort required for developers and DevOps engineers to manage and maintain it effectively, especially if further development or enhancements are planned.\n\n**Stakeholder Considerations:** Key stakeholders are likely internal IT teams responsible for platform enablement, application development, and operations. Their interest would be in the successful demonstration of OpenShift capabilities, best practices in microservices deployment, and the maintainability of the application.",
+    "migration_strategy": "Given the application's nature as a demonstration and its low business criticality, a full-scale 'migration' in the traditional sense is likely unnecessary. However, optimizing and modernizing its deployment on OpenShift can be considered a form of 'evolution'. \n\n**Migration Complexity Assessment:** The complexity is assessed as **LOW to MEDIUM**. \n- **LOW:** The application is already containerized and deployed on OpenShift. The components are relatively simple microservices.\n- **MEDIUM:** The lack of Git history, undefined CI/CD, and use of OpenShift-specific `DeploymentConfig` add moderate complexity to standardizing and automating the workflow. Replacing ephemeral dependencies also adds complexity.\n\n**Recommended Migration Approach:** Focus on modernization and standardization rather than a traditional lift-and-shift or re-platforming.\n\n**Phased Migration Plan:**\n1.  **Phase 1: Foundation & Standardization (1-2 months):**\n    *   **Version Control:** Establish proper Git repositories for each microservice, including Dockerfiles, application code, and OpenShift/Kubernetes manifests (Deployments, Services, etc.).\n    *   **CI/CD Setup:** Implement basic CI pipelines using OpenShift's CI capabilities or external tools (e.g., GitHub Actions, GitLab CI) to automate Docker image builds and push to a container registry.\n    *   **Kubernetes Manifests:** Convert OpenShift `DeploymentConfig` resources to standard Kubernetes `Deployment` and `Service` manifests.\n    *   **Base Image Updates:** Address critical security by updating Node.js and potentially Java base images.\n2.  **Phase 2: Automation & Observability (2-4 months):**\n    *   **CD Pipeline:** Implement CD pipelines for automated deployments to different environments (dev, staging, prod).\n    *   **Observability:** Integrate centralized logging and basic application monitoring (metrics).\n    *   **Configuration Management:** Centralize application configuration using ConfigMaps.\n3.  **Phase 3: State Management & Security Hardening (4-6 months):**\n    *   **Persistent Storage:** If any component requires state, implement persistent storage solutions for Redis and/or PostgreSQL.\n    *   **Security Enhancements:** Integrate security scanning, implement network policies, and refine RBAC.\n\n**Risk Mitigation Strategies:**\n*   **Lack of Git History:** Prioritize establishing proper version control immediately. Use automated tools where possible to scan existing code and Dockerfiles if source history is truly lost.\n*   **OpenShift Dependency:** Migrate to standard Kubernetes manifests early to ensure future flexibility.\n*   **Ephemeral Data:** If data persistence is required, carefully plan the state management solution and data migration strategy.",
+    "risk_assessment": "The following risks have been identified:\n\n**Technical Risks and Dependencies:**\n1.  **End-of-Life Base Images:** The Node.js 10 base image poses a significant security risk due to unpatched vulnerabilities. This is a critical technical risk.\n2.  **Ephemeral Dependencies:** The use of ephemeral PostgreSQL and Redis instances means any data stored is lost upon pod destruction, posing a risk to data integrity if the application were to be used for actual stateful operations.\n3.  **Lack of CI/CD Automation:** The absence of defined CI/CD pipelines increases the risk of manual errors, inconsistent deployments, and slow release cycles.\n4.  **Observability Gaps:** Without proper logging and monitoring, identifying and resolving issues is significantly more challenging, leading to longer downtime.\n5.  **Reliance on DeploymentConfigs:** While functional on OpenShift, this can hinder portability to other Kubernetes distributions.\n\n**Business Continuity Risks:**\n1.  **Data Loss:** If the application were ever used for critical state management, the ephemeral nature of its dependencies presents a severe business continuity risk.\n2.  **Security Breaches:** Exploitation of vulnerabilities in outdated base images or insecure configurations could lead to unauthorized access or data compromise.\n\n**Migration and Modernization Risks:**\n1.  **Complexity in Establishing GitOps:** Re-establishing proper version control and automated workflows from a potentially unmanaged state can be complex.\n2.  **Downtime during Modernization:** Transitioning from `DeploymentConfig` to `Deployment` or implementing persistent storage could introduce brief periods of unavailability if not managed carefully.\n3.  **Learning Curve:** Teams may face a learning curve in adopting new tools and practices (e.g., GitOps, advanced observability).\n\n**Risk Mitigation Priorities:**\n1.  **Immediate:** Update Node.js base image and address any known vulnerabilities in other base images. Establish version control (Git). \n2.  **High:** Implement basic CI/CD and transition to standard Kubernetes Deployments.\n3.  **Medium:** Introduce logging and monitoring. Address ephemeral dependency risks if data persistence is ever required.\n4.  **Low:** Further optimize Java runtime, refine RBAC, and implement advanced networking policies.",
+    "effort_estimation": "Effort estimation for modernizing this application is based on the identified gaps and the phased plan. Given the low business criticality, the effort can be prioritized based on risk reduction and foundational improvements.\n\n**Development Effort Estimation:**\n*   **Phase 1 (Foundation & Standardization):** 40-80 person-hours. Primarily focused on setting up Git, writing basic CI for Docker builds, and converting manifests. Updating base images is typically low effort but critical.\n*   **Phase 2 (Automation & Observability):** 80-160 person-hours. Requires more in-depth configuration for CI/CD, integrating logging and monitoring tools, and potentially writing simple test cases.\n*   **Phase 3 (State Management & Security):** 60-120 person-hours. Implementing persistent storage can vary in complexity. Security enhancements like network policies and scanning tool integration add effort.\n\n**Resource Requirements:**\n*   **DevOps Engineer(s):** Primary resource for setting up CI/CD, containerization, and OpenShift/Kubernetes configurations.\n*   **Application Developer(s):** For updating application code (if required by new dependencies/runtimes), writing tests, and understanding application-specific configuration needs.\n*   **Security Specialist (Consultative):** To guide the integration of security scanning tools and best practices.\n\n**Timeline Considerations:**\n*   **Phase 1:** 1-2 months (part-time allocation)\n*   **Phase 2:** 2-4 months (part-time allocation)\n*   **Phase 3:** 4-6 months (part-time allocation)\n\nThis assumes a small, dedicated team or a portion of existing team members' time. A full-time engagement for a small team could expedite this significantly.\n\n**Budget Implications:**\nThe budget implications are relatively low, primarily covering developer/DevOps engineer time. If new tools for CI/CD or monitoring need to be procured, that would be an additional cost. Cloud infrastructure costs for running these components are likely already accounted for, but any increase in resource utilization due to new monitoring agents or persistent storage would need to be considered.",
+    "recommendations": [
+      "**Prioritize Base Image Security:** Immediately update the Node.js 10 base image to a supported LTS version (e.g., Node 18 or 20) to mitigate critical security vulnerabilities.",
+      "**Establish Version Control (Git):** Create dedicated Git repositories for all application components (code, Dockerfiles, OpenShift/Kubernetes manifests). This is foundational for all future development and operational practices.",
+      "**Migrate to Standard Kubernetes Deployments:** Refactor OpenShift `DeploymentConfig` resources to standard Kubernetes `Deployment` objects for improved portability and broader ecosystem compatibility.",
+      "**Implement Basic CI/CD Pipelines:** Automate the build and push of Docker images for each microservice. Include basic linting and dependency vulnerability scanning.",
+      "**Introduce Centralized Logging:** Deploy a logging aggregation solution to collect and analyze logs from all application components.",
+      "**Implement Application Monitoring:** Set up Prometheus/Grafana or similar tools to collect and visualize key metrics for each microservice (CPU, memory, network, request latency, error rates).",
+      "**Address Ephemeral Dependencies:** If any component requires state, implement persistent storage solutions for Redis and/or PostgreSQL. Otherwise, clearly document their ephemeral nature.",
+      "**Integrate Security Scanning:** Automate Software Composition Analysis (SCA) to identify vulnerable dependencies and consider SAST tools for code analysis.",
+      "**Define Service Accounts and RBAC:** Create specific service accounts for each microservice with the least privilege necessary, replacing reliance on the default service account where appropriate.",
+      "**Document Application Context:** Populate `business_context`, `deployment_info`, and other metadata to provide a clear understanding of the application's role and operational requirements."
+    ]
+  },
+  "architecture_insights": {
+    "deployment_pattern": "kubernetes",
+    "architecture_style": "hybrid",
+    "technology_diversity": 2,
+    "containerization_level": "partial",
+    "orchestration_platform": "kubernetes",
+    "ci_cd_maturity": "basic",
+    "configuration_management": "basic",
+    "service_mesh": false,
+    "microservices_score": 5
+  },
+  "recommendations": [
+    "🚀 Implement automated CI/CD pipeline for consistent deployments",
+    "✅ Add more quality gates (code coverage, static analysis, security scanning)",
+    "🐳 Consider containerizing all components for consistent deployment"
+  ]
+}

@@ -1,0 +1,434 @@
+{
+  "repository_url": "https://github.com/end-of-game/openshift-voting-app",
+  "analysis_timestamp": "2025-07-17T17:54:37.691518",
+  "summary": {
+    "total_components": 8,
+    "languages": [
+      "java",
+      "nodejs",
+      "python"
+    ],
+    "containerization_status": 5,
+    "containerization_rate": "5/8",
+    "external_services": 4,
+    "external_services_list": [
+      "postgresql",
+      "PostgreSQL",
+      "redis",
+      "Redis"
+    ],
+    "datasources": 2,
+    "datasources_list": [
+      "postgresql",
+      "redis"
+    ],
+    "git_history": {
+      "total_commits": 1,
+      "active_contributors": 0,
+      "recent_activity": "inactive"
+    },
+    "security_findings": {
+      "scan_performed": true,
+      "scan_method": "base_image_analysis",
+      "findings": [
+        {
+          "component": "worker",
+          "base_image": "openjdk:8-jre",
+          "severity": "HIGH",
+          "description": "OpenJDK 8 contains known vulnerabilities",
+          "recommendation": "Update openjdk:8-jre to a more recent version"
+        },
+        {
+          "component": "worker",
+          "base_image": "maven:3.5-jdk-8-alpine",
+          "severity": "HIGH",
+          "description": "Maven 3.5 with JDK 8 contains vulnerabilities",
+          "recommendation": "Update maven:3.5-jdk-8-alpine to a more recent version"
+        },
+        {
+          "component": "result",
+          "base_image": "node:10-slim",
+          "severity": "HIGH",
+          "description": "Node.js 10 is EOL and contains numerous vulnerabilities",
+          "recommendation": "Update node:10-slim to a more recent version"
+        }
+      ],
+      "total_findings": 3,
+      "high_severity_count": 3,
+      "medium_severity_count": 0,
+      "low_severity_count": 0
+    },
+    "infrastructure_summary": {
+      "containerization_files": 0,
+      "kubernetes_resources": 0,
+      "docker_compose_files": 0,
+      "has_orchestration": false,
+      "deployment_platform": "unknown"
+    },
+    "architecture_style": {
+      "style": "microservices",
+      "confidence": "HIGH",
+      "evidence": [
+        "8 independent components",
+        "5 containerized services",
+        "Independent deployment configurations"
+      ]
+    },
+    "confidence_notes": [
+      "2 components have unknown languages - review source code structure",
+      "Only 5/8 components are containerized",
+      "Vulnerabilities detected in base images - security review recommended"
+    ]
+  },
+  "components": {
+    "vote": {
+      "name": "vote",
+      "original_name": "vote",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "python",
+      "language_confidence": 6,
+      "language_evidence": [
+        "Source analysis: 6"
+      ],
+      "runtime": "python",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "base_images": [
+        "python:3.9-slim"
+      ],
+      "exposed_ports": [
+        8080
+      ],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": true,
+      "datasource_connections": [],
+      "vulnerability_indicators": [],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    },
+    "vote-s2i": {
+      "name": "vote-s2i",
+      "original_name": "vote-s2i",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "python",
+      "language_confidence": 4,
+      "language_evidence": [
+        "Source analysis: 4"
+      ],
+      "runtime": "python",
+      "build_tool": "unknown",
+      "packaging": "wheel",
+      "base_images": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": false,
+      "datasource_connections": [],
+      "vulnerability_indicators": [],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    },
+    "postgresql-ephemeral": {
+      "name": "postgresql-ephemeral",
+      "original_name": "postgresql-ephemeral",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "unknown",
+      "language_confidence": 0.0,
+      "language_evidence": [],
+      "runtime": "unknown",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "base_images": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": true,
+      "datasource_connections": [],
+      "vulnerability_indicators": [],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    },
+    "worker-s2i": {
+      "name": "worker-s2i",
+      "original_name": "worker-s2i",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "java",
+      "language_confidence": 4,
+      "language_evidence": [
+        "Source analysis: 4"
+      ],
+      "runtime": "java",
+      "build_tool": "unknown",
+      "packaging": "jar",
+      "base_images": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": false,
+      "datasource_connections": [],
+      "vulnerability_indicators": [],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    },
+    "redis-ephemeral": {
+      "name": "redis-ephemeral",
+      "original_name": "redis-ephemeral",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "unknown",
+      "language_confidence": 0.0,
+      "language_evidence": [],
+      "runtime": "unknown",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "base_images": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": true,
+      "datasource_connections": [],
+      "vulnerability_indicators": [],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    },
+    "result-s2i": {
+      "name": "result-s2i",
+      "original_name": "result-s2i",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "nodejs",
+      "language_confidence": 4,
+      "language_evidence": [
+        "Source analysis: 4"
+      ],
+      "runtime": "nodejs",
+      "build_tool": "unknown",
+      "packaging": "npm",
+      "base_images": [],
+      "exposed_ports": [],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": false,
+      "datasource_connections": [],
+      "vulnerability_indicators": [],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    },
+    "worker": {
+      "name": "worker",
+      "original_name": "worker",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "java",
+      "language_confidence": 8,
+      "language_evidence": [
+        "Source analysis: 8"
+      ],
+      "runtime": "java",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "base_images": [
+        "openjdk:8-jre",
+        "maven:3.5-jdk-8-alpine"
+      ],
+      "exposed_ports": [],
+      "environment_variables": {
+        "JAVA_APP_JAR": "worker-jar-with-dependencies.jar"
+      },
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": true,
+      "datasource_connections": [],
+      "vulnerability_indicators": [
+        "Vulnerable base image: openjdk:8-jre",
+        "Vulnerable base image: maven:3.5-jdk-8-alpine"
+      ],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [
+        "Multiple base images detected: openjdk:8-jre, maven:3.5-jdk-8-alpine. This may indicate multi-stage builds or alternative build strategies."
+      ],
+      "type": "unified_component"
+    },
+    "result": {
+      "name": "result",
+      "original_name": "result",
+      "path": "C:\\Users\\JAIDEE~2\\AppData\\Local\\Temp\\enhanced_app_intelligence_jfpcmqbt",
+      "language": "nodejs",
+      "language_confidence": 6,
+      "language_evidence": [
+        "Source analysis: 6"
+      ],
+      "runtime": "nodejs",
+      "build_tool": "unknown",
+      "packaging": "docker",
+      "base_images": [
+        "node:10-slim"
+      ],
+      "exposed_ports": [
+        8080
+      ],
+      "environment_variables": {},
+      "dockerfile_path": null,
+      "deployment_configs": [],
+      "build_configs": [],
+      "service_configs": [],
+      "route_configs": [],
+      "is_containerized": true,
+      "datasource_connections": [],
+      "vulnerability_indicators": [
+        "Vulnerable base image: node:10-slim"
+      ],
+      "dependencies": [],
+      "external_dependencies": [],
+      "notes": [],
+      "type": "unified_component"
+    }
+  },
+  "architecture_assessment": {
+    "style": {
+      "value": "microservices",
+      "confidence": "HIGH",
+      "evidence": [
+        "Found 8 components",
+        "Multiple deployable components detected",
+        "5 containerized components",
+        "Multiple deployment configurations"
+      ],
+      "reasoning": "Multiple components with independent deployment characteristics",
+      "limitations": [
+        "Cannot determine communication patterns without runtime analysis"
+      ]
+    },
+    "complexity": {
+      "value": "MEDIUM",
+      "confidence": "MEDIUM",
+      "evidence": [
+        "Component count: 8",
+        "Programming languages: 3 (nodejs, java, python)",
+        "Infrastructure components: 0"
+      ],
+      "reasoning": "Complexity score: 3/6 based on component count, language diversity, and infrastructure"
+    },
+    "maturity": {
+      "value": "MEDIUM",
+      "confidence": "MEDIUM",
+      "evidence": [
+        "5 containerized components",
+        "Deployment configurations present"
+      ],
+      "reasoning": "Maturity score: 2/3 based on containerization, deployment, and build automation"
+    }
+  },
+  "business_criticality": {
+    "level": {
+      "value": "LOW",
+      "confidence": "MEDIUM",
+      "evidence": [
+        "'sample' found in documentation/repository name",
+        "'demo' found in documentation/repository name",
+        "'example' found in documentation/repository name"
+      ],
+      "reasoning": "Inferred from keywords and context (score: 3)",
+      "limitations": [
+        "Technical analysis cannot determine actual business impact"
+      ]
+    },
+    "confidence_notes": [
+      "Assessment based on limited technical indicators"
+    ]
+  },
+  "vulnerability_assessment": {
+    "scan_performed": false,
+    "scan_tool": "manual_analysis",
+    "findings_count": 25,
+    "base_image_risks": 3,
+    "outdated_dependencies": 0,
+    "assessment_notes": [
+      "WARNING: No automated vulnerability scanner (like Trivy) was available. This analysis is based on manual pattern detection and may miss vulnerabilities.",
+      "Found 3 base images with known risks. Consider updating to more recent, supported versions.",
+      "For production systems, integrate with dedicated vulnerability scanners like Snyk, Veracode, or OWASP Dependency-Check."
+    ]
+  },
+  "git_history": {
+    "total_commits": 1,
+    "active_contributors": 0,
+    "commit_frequency": {
+      "daily": 0,
+      "weekly": 0,
+      "monthly": 0
+    },
+    "commit_types": {
+      "chore": 1
+    },
+    "hotspot_files": [],
+    "development_patterns": [],
+    "release_cadence": "unknown",
+    "code_stability": "high",
+    "team_velocity": "low",
+    "recent_activity": "inactive",
+    "branch_strategy": "simple",
+    "test_patterns": []
+  },
+  "confidence_summary": {
+    "architecture_style": {
+      "value": "microservices",
+      "confidence": "HIGH",
+      "evidence_count": 4
+    },
+    "business_criticality": {
+      "value": "LOW",
+      "confidence": "MEDIUM",
+      "is_inferred": false
+    },
+    "complexity": {
+      "value": "MEDIUM",
+      "confidence": "MEDIUM"
+    },
+    "overall_confidence": "MEDIUM"
+  },
+  "recommendations": [
+    "🔍 Component Analysis: 2 components have unknown languages. Review build configurations and source code structure.",
+    "📊 Development Activity: Low recent activity detected. Consider reviewing development processes and team capacity.",
+    "🔒 Security: 25 critical/high severity vulnerabilities found. Prioritize security remediation.",
+    "🐳 Base Images: 3 base images have known risks. Update to more recent versions."
+  ],
+  "orchestration_by_component": {}
+}

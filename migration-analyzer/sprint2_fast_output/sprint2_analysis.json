@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "repository_url": "file://D:\\Projects-D\\migration-assisant-mvp12\\migration-analyzer\\test_project",
+    "analysis_date": "2025-07-17T11:37:38.887192",
+    "report_generated": "2025-07-17T11:37:38.890706"
+  },
+  "components": [
+    {
+      "name": "root",
+      "path": "D:\\Projects-D\\migration-assisant-mvp12\\migration-analyzer\\test_project",
+      "language": "python",
+      "files_count": 1,
+      "lines_of_code": 50,
+      "api_endpoints_count": 0,
+      "database_operations_count": 0,
+      "http_calls_count": 0
+    }
+  ],
+  "dependencies": [],
+  "criticality_assessments": [
+    {
+      "component_name": "root",
+      "business_criticality": "low",
+      "technical_complexity": "low",
+      "user_impact": "low",
+      "data_sensitivity": "low",
+      "reasoning": "Standard component with typical criticality",
+      "score": 0.004
+    }
+  ],
+  "security_findings": {},
+  "architecture_insights": [],
+  "migration_recommendations": []
+}
