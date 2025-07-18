@@ -9,6 +9,9 @@ env/
 ENV/
 .venv/
 
+# Claude settings
+.claude/
+
 # Markdown files
 *.md
 
